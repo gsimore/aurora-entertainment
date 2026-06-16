@@ -185,16 +185,28 @@
   .card p{color:var(--muted);font-size:.95rem;font-weight:300}
   .card .tag{margin-top:16px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
 
-  /* services photo gallery */
-  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:50px}
-  .gallery .ph{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;
+  /* services photo gallery — mosaic collage */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);
+    grid-auto-rows:clamp(140px,18vw,230px);grid-auto-flow:dense;gap:14px;margin-top:50px}
+  .gallery .ph{position:relative;border-radius:14px;overflow:hidden;
     border:1px solid var(--line);cursor:pointer}
-  .gallery .ph img{width:100%;height:100%;object-fit:cover;display:block;
+  .gallery .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
     transition:transform 1s cubic-bezier(.2,.7,.2,1),filter .6s}
   .gallery .ph::after{content:"";position:absolute;inset:0;pointer-events:none;
     background:linear-gradient(180deg,transparent 60%,rgba(5,6,15,.5));opacity:.7;transition:opacity .4s}
   .gallery .ph:hover img{transform:scale(1.25)}
   .gallery .ph:hover::after{opacity:.3}
+  /* mosaic spans — varied tile sizes */
+  .gallery .big{grid-column:span 2;grid-row:span 2}
+  .gallery .tall{grid-row:span 2}
+  .gallery .wide{grid-column:span 2}
+  /* the fire-hoop anchor tile: stronger fade + caption */
+  .gallery .feature::after{background:linear-gradient(180deg,transparent 42%,rgba(5,6,15,.72));opacity:1}
+  .gallery .feature:hover::after{opacity:.85}
+  .gallery .feature .cap{position:absolute;left:22px;bottom:20px;z-index:2;pointer-events:none;
+    font-family:var(--serif);font-style:italic;font-weight:500;
+    font-size:clamp(1.1rem,2.2vw,1.7rem);line-height:1.15;color:#fff;
+    text-shadow:0 2px 20px rgba(0,0,0,.65);max-width:78%}
 
   /* event types row */
   .events{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:46px}
@@ -256,7 +268,10 @@
   @media(max-width:860px){
     .about{grid-template-columns:1fr;gap:40px}
     .grid{grid-template-columns:1fr 1fr}
-    .gallery{grid-template-columns:1fr 1fr}
+    /* mosaic -> 2 cols: fire-hoop spans full width, others normalise */
+    .gallery{grid-template-columns:1fr 1fr;grid-auto-rows:clamp(150px,32vw,220px)}
+    .gallery .tall,.gallery .wide{grid-column:auto;grid-row:auto}
+    .gallery .big{grid-column:span 2;grid-row:span 2}
   }
   @media(max-width:640px){
     .nav-links{position:fixed;inset:78px 0 auto 0;flex-direction:column;gap:0;
@@ -267,7 +282,7 @@
     .nav-links .btn{margin:10px 28px;text-align:center}
     .menu-toggle{display:block}
     .grid,.acts{grid-template-columns:1fr}
-    .gallery{grid-template-columns:1fr 1fr;gap:10px}
+    .gallery{grid-template-columns:1fr 1fr;gap:10px;grid-auto-rows:clamp(130px,38vw,200px)}
     .form-grid{grid-template-columns:1fr}
     .book-card{padding:36px 24px}
     .wrap{padding:0 20px}
@@ -407,12 +422,16 @@
       </div>
 
       <div class="gallery" data-reveal>
-        <div class="ph"><img src="assets/wedding-silks-indoor.jpg" alt="Elegant aerial silks performance at an indoor wedding reception" loading="lazy"></div>
+        <div class="ph big feature">
+          <img src="assets/fire-hoop.jpg" alt="Aerial hoop performer suspended above a fire-lit crowd at dusk" loading="lazy">
+          <span class="cap">Fire &amp; flight, live.</span>
+        </div>
+        <div class="ph tall"><img src="assets/lobby-duo-silks-2.jpg" alt="Aerial silks duo performance in an elegant hotel lobby" loading="lazy"></div>
         <div class="ph"><img src="assets/berber-hoop.jpg" alt="Aerial hoop performance in a candlelit venue under purple light" loading="lazy"></div>
-        <div class="ph"><img src="assets/lobby-duo-silks-2.jpg" alt="Aerial silks duo performance in an elegant hotel lobby" loading="lazy"></div>
+        <div class="ph"><img src="assets/wedding-silks-indoor.jpg" alt="Elegant aerial silks performance at an indoor wedding reception" loading="lazy"></div>
 
-        <div class="ph"><img src="assets/forest-silks-1.jpg" alt="Outdoor aerial silks performance at a forest wedding" loading="lazy"></div>
-        <div class="ph"><img src="assets/wedding-silks-aisle.jpg" alt="Aerial silks split pose above a wedding aisle" loading="lazy"></div>
+        <div class="ph wide"><img src="assets/forest-silks-1.jpg" alt="Outdoor aerial silks performance at a forest wedding" loading="lazy"></div>
+        <div class="ph tall"><img src="assets/wedding-silks-aisle.jpg" alt="Aerial silks split pose above a wedding aisle" loading="lazy"></div>
         <div class="ph"><img src="assets/forest-silks-2.jpg" alt="Aerial silks cocoon pose at an outdoor forest event" loading="lazy"></div>
 
         <div class="ph"><img src="assets/croc-stage.jpg" alt="Handstand and balance act on a lit stage" loading="lazy"></div>
